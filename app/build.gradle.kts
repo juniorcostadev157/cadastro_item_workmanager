@@ -164,8 +164,16 @@ dependencies {
     ksp(libs.room.compiler)
     testImplementation(kotlin("test"))
 
-    //workManager
+    // Hilt (injeção de dependência)
+    implementation(libs.androidx.hilt)
+    ksp(libs.androidx.hilt.compiler)
+
+        // WorkManager
     implementation(libs.androidx.work.runtime.ktx)
+
+
+// Hilt + WorkManager integration
     implementation(libs.androidx.work.hilt)
+    ksp(libs.androidx.hilt.compiler.work)
 
 }
