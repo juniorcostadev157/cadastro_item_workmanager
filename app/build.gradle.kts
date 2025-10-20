@@ -166,6 +166,6 @@ dependencies {
 
     //workManager
     implementation(libs.androidx.work.runtime.ktx)
-    // implementation(libs.androidx.work.hilt)
+    implementation(libs.androidx.work.hilt)
 
 }
