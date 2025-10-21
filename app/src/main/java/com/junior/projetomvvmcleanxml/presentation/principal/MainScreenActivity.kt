@@ -5,11 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -17,12 +17,13 @@ import com.junior.projetomvvmcleanxml.R
 import com.junior.projetomvvmcleanxml.databinding.ActivityMainScreenBinding
 import com.junior.projetomvvmcleanxml.presentation.login.LoginActivity
 import com.junior.projetomvvmcleanxml.presentation.login.SessionViewModel
-import com.junior.projetomvvmcleanxml.presentation.utils.InjectContainer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainScreenBinding
-    private lateinit var sessionViewModel: SessionViewModel
+    private val sessionViewModel: SessionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class MainScreenActivity : AppCompatActivity() {
             )
         )
 
-        sessionViewModel = ViewModelProvider(this, InjectContainer.sessionFactory)[SessionViewModel::class.java]
+
         sessionViewModel.isLoggedIn.observe(this){isLogged->
             if (!isLogged){
                navigateToLogin()

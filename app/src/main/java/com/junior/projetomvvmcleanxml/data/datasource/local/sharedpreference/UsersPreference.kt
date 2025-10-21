@@ -3,8 +3,10 @@ package com.junior.projetomvvmcleanxml.data.datasource.local.sharedpreference
 import android.content.Context
 import androidx.core.content.edit
 import com.junior.projetomvvmcleanxml.domain.repository.UserSessionDataSource
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class UsersPreference( context: Context): UserSessionDataSource {
+class UsersPreference @Inject constructor( @ApplicationContext context: Context): UserSessionDataSource {
     private val prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
 

@@ -10,8 +10,9 @@ import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.lang.Exception
+import javax.inject.Inject
 
-class ItemRepositoryImpl (
+class ItemRepositoryImpl  @Inject constructor(
     private val remote: FirebaseItemDataSource,
     private val local: RoomItemDataSource
 ): ItemRepository {

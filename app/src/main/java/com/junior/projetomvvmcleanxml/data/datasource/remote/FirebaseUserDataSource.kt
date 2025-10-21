@@ -5,8 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.junior.projetomvvmcleanxml.core.CrashlyticsLogger
 import com.junior.projetomvvmcleanxml.data.model.user.UserEntity
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseUserDataSource (
+class FirebaseUserDataSource  @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
 

@@ -5,22 +5,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.junior.projetomvvmcleanxml.core.hideKeyboard
 import com.junior.projetomvvmcleanxml.databinding.ActivityLoginBinding
 import com.junior.projetomvvmcleanxml.presentation.cadastro.CadastroActivity
 import com.junior.projetomvvmcleanxml.presentation.principal.MainScreenActivity
-import com.junior.projetomvvmcleanxml.presentation.utils.InjectContainer
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-
-    private lateinit var viewModel: LoginViewModel
-    private lateinit var sessionViewModel: SessionViewModel
     private lateinit var binding: ActivityLoginBinding
+
+    private val  viewModel: LoginViewModel by viewModels()
+    private val sessionViewModel: SessionViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +34,7 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        InjectContainer.init(applicationContext)
 
-
-
-        val factory = InjectContainer.loginFactory
-        viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
-        sessionViewModel = ViewModelProvider(this, InjectContainer.sessionFactory)[SessionViewModel::class.java]
 
         buttonLogin()
         setupObservers()

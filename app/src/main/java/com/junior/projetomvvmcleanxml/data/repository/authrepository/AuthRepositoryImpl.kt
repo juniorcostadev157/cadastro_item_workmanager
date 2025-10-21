@@ -7,8 +7,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.junior.projetomvvmcleanxml.core.CrashlyticsLogger
 import com.junior.projetomvvmcleanxml.data.datasource.remote.FirebaseAuthDataSource
 import com.junior.projetomvvmcleanxml.domain.repository.AuthRepository
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val data: FirebaseAuthDataSource
 ) : AuthRepository {
 

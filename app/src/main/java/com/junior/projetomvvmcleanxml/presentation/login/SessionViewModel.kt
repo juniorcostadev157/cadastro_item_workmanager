@@ -6,8 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.GetNameSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.GetUserIdSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.SaveUserSessionUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SessionViewModel(
+@HiltViewModel
+class SessionViewModel @Inject constructor(
     private val getUserSession: GetUserIdSessionUseCase,
     private val saveUserSession: SaveUserSessionUseCase,
     private val getNameSessionUseCase: GetNameSessionUseCase

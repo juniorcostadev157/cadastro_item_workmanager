@@ -3,8 +3,9 @@ package com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase
 
 import com.junior.projetomvvmcleanxml.data.repository.authrepository.AuthError
 import com.junior.projetomvvmcleanxml.domain.repository.AuthRepository
+import javax.inject.Inject
 
-class LoginValidationUseCase(
+class LoginValidationUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
     suspend operator fun invoke(email: String , password: String): ValidationResult{

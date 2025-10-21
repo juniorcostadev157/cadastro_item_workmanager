@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.core.AnalyticsLogger
 import com.junior.projetomvvmcleanxml.domain.usecase.item.CreateItemUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.GetUserIdSessionUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CreateItemViewModel(
+@HiltViewModel
+class CreateItemViewModel @Inject constructor(
     private val creteItem: CreateItemUseCase,
     private val getUserIdSessionUseCase: GetUserIdSessionUseCase
 ) : ViewModel() {
