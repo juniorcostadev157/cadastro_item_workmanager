@@ -32,27 +32,22 @@ class ItemRepositoryImpl  @Inject constructor(
        }
     }
 
-    override suspend fun getAllLocalItems(): Flow<List<Item>> {
+    override fun getAllLocalItems(): Flow<List<Item>> {
         return local.getAllItems().map { list->
             list.map{itemEntityLocal->
-                itemEntityLocal!!.toDomain()
+                itemEntityLocal.toDomain()
             }
         }
-
-
-
-
-
     }
 
-    suspend fun syncPendingItems(){
+    override suspend fun syncPendingItems(){
         val pendentes = local.getPendingItems()
         for (item in pendentes) {
             try {
-                remote.createItem(item?.toDomain()!!.toEntity())
+                remote.createItem(item.toDomain().toEntity())
                 local.updateItem(item.copy(isSynchronized = true))
             } catch (e: Exception) {
-                println("Erro ao sincronizar ${item?.id}: ${e.message}")
+                println("Erro ao sincronizar ${item.id}: ${e.message}")
             }
         }
     }

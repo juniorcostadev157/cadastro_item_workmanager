@@ -34,7 +34,6 @@ class CadastroActivity : AppCompatActivity() {
             insets
         }
 
-
         setupObservers()
         cadastrarUser()
         backButton()

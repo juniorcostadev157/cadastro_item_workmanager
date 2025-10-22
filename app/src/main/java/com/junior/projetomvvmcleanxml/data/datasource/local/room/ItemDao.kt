@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.junior.projetomvvmcleanxml.data.model.item.ItemLocalEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,9 +19,9 @@ interface ItemDao {
     suspend fun insertItem(item: ItemLocalEntity)
 
     @Query("SELECT * FROM items WHERE isSynchronized = 0")
-    suspend fun getPendingItems(): List<ItemLocalEntity?>
+    suspend fun getPendingItems(): List<ItemLocalEntity>
 
-    @Update
+    @Upsert //ou @Update
     suspend fun updateItem(item: ItemLocalEntity)
 
     @Query("DELETE FROM items")

@@ -14,7 +14,7 @@ class RoomItemDataSource @Inject constructor(private val dao: ItemDao) {
         return dao.getAllItems()
     }
 
-    suspend fun getPendingItems(): List<ItemLocalEntity?>{
+    suspend fun getPendingItems(): List<ItemLocalEntity>{
         return dao.getPendingItems()
     }
 
