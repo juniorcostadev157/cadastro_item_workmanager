@@ -63,8 +63,9 @@
     <string name="status_ok">✅ Sincronizado</string>
     <string name="status_pending">⏳ Pendente</string>
     <string name="status_cloud">☁️ Cloud</string>
+    <string name="sync_auto">Sincronizar automaticamente</string>
+    <string name="sync_disabled">Sincronização desativada</string>
 
 
-    "
 
 </resources>

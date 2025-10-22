@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkInfo
+import com.junior.projetomvvmcleanxml.R
 import com.junior.projetomvvmcleanxml.databinding.FragmentListRoomBinding
 import com.junior.projetomvvmcleanxml.presentation.principal.adapter.AdapterItem
 import com.junior.projetomvvmcleanxml.presentation.principal.list_item_firebase_fragment.ListItemUiState
@@ -66,7 +68,33 @@ class ListRoomFragment : Fragment() {
                 is ListItemUiState.Error -> hideLoading()
             }
         }
+        switchSync()
+
+    }
+
+
+    private fun switchSync(){
+        var internalChange = false
+
+        viewModel.syncEnabled.observe(viewLifecycleOwner){isEnabled->
+            internalChange = true
+            binding.switchSync.isChecked = isEnabled
+            internalChange = false
+
+            if (isEnabled){
+                observeStateWork()
+            }else{
+                binding.txtStatusSync.text = getString(R.string.sync_disabled)
             }
+        }
+
+
+        binding.switchSync.setOnCheckedChangeListener { _, isChecked->
+            if (!internalChange) {
+                viewModel.toggleSync(isChecked)
+            }
+        }
+    }
 
     private fun showLoading() {
         binding.progressLoading.visibility = View.VISIBLE
@@ -76,6 +104,26 @@ class ListRoomFragment : Fragment() {
     private fun hideLoading() {
         binding.progressLoading.visibility = View.GONE
 
+    }
+
+    private fun observeStateWork(){
+        viewModel.observeSyncWork(viewLifecycleOwner)
+        viewModel.workState.observe(viewLifecycleOwner){workState->
+            when(workState){
+                WorkInfo.State.ENQUEUED ->showStatus("Agendado")
+                WorkInfo.State.RUNNING -> showStatus("Sincronizando")
+                WorkInfo.State.SUCCEEDED -> showStatus("Concluido")
+                WorkInfo.State.FAILED -> showStatus("Falhou")
+                WorkInfo.State.CANCELLED -> showStatus("Cancelado")
+                else -> {}
+            }
+
+        }
+
+    }
+
+    private fun showStatus(msg: String){
+        binding.txtStatusSync.text = msg
     }
 
 

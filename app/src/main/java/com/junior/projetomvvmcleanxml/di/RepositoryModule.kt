@@ -1,11 +1,13 @@
 package com.junior.projetomvvmcleanxml.di
 
+import com.junior.projetomvvmcleanxml.data.datasource.local.sharedpreference.SyncPreference
 import com.junior.projetomvvmcleanxml.data.datasource.local.sharedpreference.UsersPreference
 import com.junior.projetomvvmcleanxml.data.repository.ItemRepositoryImpl
 import com.junior.projetomvvmcleanxml.data.repository.UserRepositoryImpl
 import com.junior.projetomvvmcleanxml.data.repository.authrepository.AuthRepositoryImpl
 import com.junior.projetomvvmcleanxml.domain.repository.AuthRepository
 import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
+import com.junior.projetomvvmcleanxml.domain.repository.SyncPreferenceRepository
 import com.junior.projetomvvmcleanxml.domain.repository.UserRepository
 import com.junior.projetomvvmcleanxml.domain.repository.UserSessionDataSource
 import dagger.Binds
@@ -33,5 +35,9 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindUserSessionDataSource( impl: UsersPreference): UserSessionDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindSyncPreferenceRepository(impl: SyncPreference): SyncPreferenceRepository
 
 }

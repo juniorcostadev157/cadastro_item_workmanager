@@ -8,7 +8,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.junior.projetomvvmcleanxml.core.AnalyticsLogger
 import com.junior.projetomvvmcleanxml.core.CrashlyticsLogger
-import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
+import com.junior.projetomvvmcleanxml.domain.repository.SyncPreferenceRepository
+import com.junior.projetomvvmcleanxml.domain.usecase.item.SyncPendingItemUseCase
+import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.GetUserIdSessionUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -16,16 +18,31 @@ import dagger.assisted.AssistedInject
 class SyncItemWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val repository: ItemRepository
+    private val syncPendingItemUseCase: SyncPendingItemUseCase,
+    private val getUserIdSessionUseCase: GetUserIdSessionUseCase,
+    private val syncSettings: SyncPreferenceRepository
+
 ): CoroutineWorker(context, params) {
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override suspend fun doWork(): Result {
 
+        if (!syncSettings.isSyncEnabled()){
+            AnalyticsLogger.logEvent("sync_skipped_disabled")
+            return Result.success()
+        }
+
+        val userId = getUserIdSessionUseCase()
+
+        if (userId.isNullOrBlank()){
+            AnalyticsLogger.logEvent("sync_skipped_user_not_logged")
+            return Result.success()
+        }
+
         AnalyticsLogger.logEvent("sync_item_started")
 
         return try {
-            repository.syncPendingItems()
+            syncPendingItemUseCase()
             AnalyticsLogger.logEvent("sync_item_success")
             WorkerNotificationHelper.showNotification(
                 applicationContext,
