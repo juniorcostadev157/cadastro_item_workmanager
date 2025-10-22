@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.domain.usecase.item.ListLocalItemsUseCase
 import com.junior.projetomvvmcleanxml.presentation.principal.list_item_firebase_fragment.ListItemUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListRoomViewModel(
+@HiltViewModel
+class ListRoomViewModel @Inject constructor(
     private val listLocal: ListLocalItemsUseCase
 ) : ViewModel(){
 

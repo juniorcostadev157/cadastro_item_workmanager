@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.junior.projetomvvmcleanxml.core.hideKeyboard
 import com.junior.projetomvvmcleanxml.databinding.FragmentCreateItemBinding
-import com.junior.projetomvvmcleanxml.presentation.utils.InjectContainer
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CreateItemFragment : Fragment() {
 
     private var _binding: FragmentCreateItemBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: CreateItemViewModel
+    private val viewModel: CreateItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +33,6 @@ class CreateItemFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = InjectContainer.createItemFactory
-        viewModel =   ViewModelProvider(this, factory)[CreateItemViewModel::class.java]
 
         viewModel.uiState.observe(viewLifecycleOwner){state->
             when(state){

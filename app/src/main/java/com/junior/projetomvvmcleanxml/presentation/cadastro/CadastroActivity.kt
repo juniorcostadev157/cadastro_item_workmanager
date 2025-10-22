@@ -5,21 +5,21 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.junior.projetomvvmcleanxml.core.hideKeyboard
 import com.junior.projetomvvmcleanxml.databinding.ActivityCadastroBinding
-import com.junior.projetomvvmcleanxml.presentation.login.SessionViewModel
 import com.junior.projetomvvmcleanxml.presentation.principal.MainScreenActivity
-import com.junior.projetomvvmcleanxml.presentation.utils.InjectContainer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CadastroActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: CadastroViewModel
+
     private lateinit var binding: ActivityCadastroBinding
-    private lateinit var sessionViewModel: SessionViewModel
+    private val viewModel: CadastroViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +33,6 @@ class CadastroActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val factory = InjectContainer.cadastroFactory
-        viewModel = ViewModelProvider(this, factory)[CadastroViewModel::class.java]
-        sessionViewModel = ViewModelProvider(this, InjectContainer.sessionFactory)[SessionViewModel::class.java]
-
-
 
         setupObservers()
         cadastrarUser()

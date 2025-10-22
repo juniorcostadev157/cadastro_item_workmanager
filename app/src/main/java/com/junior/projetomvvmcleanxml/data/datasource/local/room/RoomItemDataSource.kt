@@ -2,8 +2,9 @@ package com.junior.projetomvvmcleanxml.data.datasource.local.room
 
 import com.junior.projetomvvmcleanxml.data.model.item.ItemLocalEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class RoomItemDataSource(private val dao: ItemDao) {
+class RoomItemDataSource @Inject constructor(private val dao: ItemDao) {
 
     suspend fun insertItem(item: ItemLocalEntity){
         dao.insertItem(item)
@@ -13,7 +14,7 @@ class RoomItemDataSource(private val dao: ItemDao) {
         return dao.getAllItems()
     }
 
-    suspend fun getPendingItems(): List<ItemLocalEntity?>{
+    suspend fun getPendingItems(): List<ItemLocalEntity>{
         return dao.getPendingItems()
     }
 

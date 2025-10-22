@@ -5,20 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.junior.projetomvvmcleanxml.databinding.FragmentListRoomBinding
 import com.junior.projetomvvmcleanxml.presentation.principal.adapter.AdapterItem
 import com.junior.projetomvvmcleanxml.presentation.principal.list_item_firebase_fragment.ListItemUiState
-import com.junior.projetomvvmcleanxml.presentation.utils.InjectContainer
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ListRoomFragment : Fragment() {
 
     private var _binding: FragmentListRoomBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: ListRoomViewModel
+    private val viewModel: ListRoomViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -34,9 +34,6 @@ class ListRoomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        val factory = InjectContainer.listItemRoomFactory
-        viewModel = ViewModelProvider(this, factory)[ListRoomViewModel::class.java]
-
 
 
         val recyclerItems = binding.recylerItemsLocal

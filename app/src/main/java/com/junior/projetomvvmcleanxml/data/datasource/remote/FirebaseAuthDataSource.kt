@@ -2,8 +2,9 @@ package com.junior.projetomvvmcleanxml.data.datasource.remote
 
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseAuthDataSource(
+class FirebaseAuthDataSource @Inject constructor(
     private val firebase: FirebaseAuth,
 
     ) {

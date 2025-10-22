@@ -10,8 +10,9 @@ import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.lang.Exception
+import javax.inject.Inject
 
-class ItemRepositoryImpl (
+class ItemRepositoryImpl  @Inject constructor(
     private val remote: FirebaseItemDataSource,
     private val local: RoomItemDataSource
 ): ItemRepository {
@@ -31,27 +32,22 @@ class ItemRepositoryImpl (
        }
     }
 
-    override suspend fun getAllLocalItems(): Flow<List<Item>> {
+    override fun getAllLocalItems(): Flow<List<Item>> {
         return local.getAllItems().map { list->
             list.map{itemEntityLocal->
-                itemEntityLocal!!.toDomain()
+                itemEntityLocal.toDomain()
             }
         }
-
-
-
-
-
     }
 
-    suspend fun syncPendingItems(){
+    override suspend fun syncPendingItems(){
         val pendentes = local.getPendingItems()
         for (item in pendentes) {
             try {
-                remote.createItem(item?.toDomain()!!.toEntity())
+                remote.createItem(item.toDomain().toEntity())
                 local.updateItem(item.copy(isSynchronized = true))
             } catch (e: Exception) {
-                println("Erro ao sincronizar ${item?.id}: ${e.message}")
+                println("Erro ao sincronizar ${item.id}: ${e.message}")
             }
         }
     }

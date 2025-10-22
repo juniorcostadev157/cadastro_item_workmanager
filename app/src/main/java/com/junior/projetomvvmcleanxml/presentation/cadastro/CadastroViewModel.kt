@@ -8,9 +8,12 @@ import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.Creat
 import com.junior.projetomvvmcleanxml.domain.usecase.users.CreateUsersUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.SaveUserSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.users.GetUserByIdUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CadastroViewModel (
+@HiltViewModel
+class CadastroViewModel @Inject constructor(
     private val createUsers: CreateUsersUseCase,
     private val createRegister: CreateRegisterValidationUseCase,
     private val saveUserSessionUseCase: SaveUserSessionUseCase,

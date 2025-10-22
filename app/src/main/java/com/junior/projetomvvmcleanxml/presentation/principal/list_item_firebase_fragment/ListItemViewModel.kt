@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.LogoutUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.item.ListItemUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.ClearUseSessionUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListItemViewModel(
+@HiltViewModel
+class ListItemViewModel @Inject constructor (
     private val getAllItem: ListItemUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val clearUseSessionUseCase: ClearUseSessionUseCase

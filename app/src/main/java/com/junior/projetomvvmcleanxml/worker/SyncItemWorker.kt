@@ -3,17 +3,20 @@ package com.junior.projetomvvmcleanxml.worker
 import android.Manifest
 import android.content.Context
 import androidx.annotation.RequiresPermission
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.junior.projetomvvmcleanxml.core.AnalyticsLogger
 import com.junior.projetomvvmcleanxml.core.CrashlyticsLogger
-import com.junior.projetomvvmcleanxml.data.repository.ItemRepositoryImpl
+import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 
-
-class SyncItemWorker(
-    context: Context,
-    params: WorkerParameters,
-    private val repository: ItemRepositoryImpl
+@HiltWorker
+class SyncItemWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters,
+    private val repository: ItemRepository
 ): CoroutineWorker(context, params) {
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)

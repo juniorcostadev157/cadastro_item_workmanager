@@ -2,12 +2,18 @@ package com.junior.projetomvvmcleanxml.domain.usecase.item
 
 import com.junior.projetomvvmcleanxml.domain.model.item.Item
 import com.junior.projetomvvmcleanxml.domain.repository.ItemRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class ListLocalItemsUseCase(private val repository: ItemRepository) {
+class ListLocalItemsUseCase @Inject constructor(
+    private val repository: ItemRepository,
+    ) {
 
-    suspend operator fun invoke(): Flow<List<Item>>{
+    operator fun invoke(): Flow<List<Item>> {
         return repository.getAllLocalItems()
+            .flowOn(Dispatchers.IO) // perfeito porque muda o dispatcher
 
     }
 }

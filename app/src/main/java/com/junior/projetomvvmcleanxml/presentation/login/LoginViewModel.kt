@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.LoginValidationUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.SaveUserSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.users.GetUserByIdUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginValidationUseCase,
     private val saveUserSession: SaveUserSessionUseCase,
     private val getUserByIdUseCase: GetUserByIdUseCase
