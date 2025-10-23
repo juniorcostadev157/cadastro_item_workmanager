@@ -41,6 +41,8 @@ class ListRoomFragment : Fragment() {
         val recyclerItems = binding.recylerItemsLocal
         recyclerItems.layoutManager = LinearLayoutManager(requireContext())
         recyclerItems.setHasFixedSize(true)
+        recyclerItems.isNestedScrollingEnabled = true
+        recyclerItems.clipToPadding = false
         val adapter = AdapterItem(requireContext(), mutableListOf(), false)
         recyclerItems.adapter =adapter
 
