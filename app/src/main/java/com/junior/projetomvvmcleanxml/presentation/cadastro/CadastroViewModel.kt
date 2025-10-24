@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.CreateRegisterValidationUseCase
+import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.ValidationAuthFieldsUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.users.CreateUsersUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.SaveUserSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.users.GetUserByIdUseCase
@@ -17,7 +18,8 @@ class CadastroViewModel @Inject constructor(
     private val createUsers: CreateUsersUseCase,
     private val createRegister: CreateRegisterValidationUseCase,
     private val saveUserSessionUseCase: SaveUserSessionUseCase,
-    private val getUserByIdUseCase: GetUserByIdUseCase
+    private val getUserByIdUseCase: GetUserByIdUseCase,
+    private val validationFieldsUseCase: ValidationAuthFieldsUseCase
 
 ): ViewModel() {
 
@@ -28,6 +30,8 @@ class CadastroViewModel @Inject constructor(
         _cadastroState.value = CadastroUiState.Loading
 
         viewModelScope.launch {
+           val resultValidation =  validationFieldsUseCase(email, password)
+
             val validation = createRegister(email, password)
             if (validation.success){
 
@@ -43,7 +47,9 @@ class CadastroViewModel @Inject constructor(
                 _cadastroState.value = CadastroUiState.Success
 
             }else{
+                _cadastroState.value = CadastroUiState.Error(resultValidation.errorMessage ?: "Erro desconhecido")
                 _cadastroState.value = CadastroUiState.Error(validation.errorMessage ?: "Erro desconhecido")
+
             }
         }
     }

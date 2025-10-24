@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.LoginValidationUseCase
+import com.junior.projetomvvmcleanxml.domain.usecase.authenticationusecase.ValidationAuthFieldsUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.userpreference.SaveUserSessionUseCase
 import com.junior.projetomvvmcleanxml.domain.usecase.users.GetUserByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginValidationUseCase,
     private val saveUserSession: SaveUserSessionUseCase,
-    private val getUserByIdUseCase: GetUserByIdUseCase
+    private val getUserByIdUseCase: GetUserByIdUseCase,
+    private val validationFieldsUseCase: ValidationAuthFieldsUseCase
 ): ViewModel() {
 
     private val _loginStage = MutableLiveData<LoginUiState>(LoginUiState.Empty)
@@ -27,6 +29,7 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             val  validation = loginUseCase(email, senha)
+            val result = validationFieldsUseCase(email, senha)
 
             if (validation.success){
                 val userId = validation.data
@@ -37,6 +40,7 @@ class LoginViewModel @Inject constructor(
 
                 _loginStage.value = LoginUiState.Success
             }else{
+                _loginStage.value = LoginUiState.Error(result.errorMessage ?: "")
                 _loginStage.value = LoginUiState.Error(validation.errorMessage ?: "Erro desconhecido")
 
             }
