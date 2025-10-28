@@ -28,9 +28,13 @@ class LoginViewModel @Inject constructor(
         _loginStage.value = LoginUiState.Loading
 
         viewModelScope.launch {
-            val  validation = loginUseCase(email, senha)
-            val result = validationFieldsUseCase(email, senha)
 
+            val result = validationFieldsUseCase(email, senha)
+            if (!result.success){
+                _loginStage.value = LoginUiState.Error(result.errorMessage ?: "")
+                return@launch
+            }
+            val  validation = loginUseCase(email, senha)
             if (validation.success){
                 val userId = validation.data
                 val infoUser = getUserByIdUseCase(userId ?:"")
@@ -40,7 +44,7 @@ class LoginViewModel @Inject constructor(
 
                 _loginStage.value = LoginUiState.Success
             }else{
-                _loginStage.value = LoginUiState.Error(result.errorMessage ?: "")
+
                 _loginStage.value = LoginUiState.Error(validation.errorMessage ?: "Erro desconhecido")
 
             }
@@ -49,4 +53,4 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-}
+  }

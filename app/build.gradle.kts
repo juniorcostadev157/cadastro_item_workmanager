@@ -135,6 +135,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.androidx.arch.core.testing)
 
     // Firebase BOM to manage versions
     implementation(platform(libs.firebase.bom))
