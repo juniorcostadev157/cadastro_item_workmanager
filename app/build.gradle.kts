@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.hilt.android)
+
 }
 
 val keystoreProperties = Properties()
@@ -53,6 +54,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         signingConfig = signingConfigs.getByName("release")
     }
 
@@ -124,61 +126,71 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 dependencies {
+
+    //--- CORE E BASE ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.coordinatorlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    testImplementation(libs.mockk)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.androidx.arch.core.testing)
 
-    // Firebase BOM to manage versions
-    implementation(platform(libs.firebase.bom))
-
-    // Firebase Dependencies
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.messaging.ktx)
-    implementation(libs.firebase.storage.ktx)
-    implementation(libs.firebase.firestore.ktx)
-
-    // viewModelScope
-    implementation(libs.androidx.lifecycle.viewmodelKtx)
-    implementation(libs.androidx.lifecycle.livedataKtx)
-
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.livedataKtx)
-    implementation(libs.androidx.lifecycle.viewmodelKtx)
+    //  --- NAVEGAÇÃO ---
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    //  --- UI COMPONENTES ---
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.cardview)
-    implementation(libs.firebase.crashlytics)
 
-    //room
+    //  --- ROOM (PERSISTÊNCIA LOCAL) ---
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
-    testImplementation(kotlin("test"))
 
-    // Hilt (injeção de dependência)
+    //  --- LIFECYCLE (ViewModel, LiveData, etc) ---
+    implementation(libs.androidx.lifecycle.viewmodelKtx)
+    implementation(libs.androidx.lifecycle.livedataKtx)
+
+    //  --- WORKMANAGER ---
+    implementation(libs.androidx.work.runtime.ktx)
+
+    //  --- FIREBASE (BOM gerencia as versões) ---
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.crashlytics)
+
+    //  --- HILT (Injeção de Dependência) ---
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
 
-        // WorkManager
-    implementation(libs.androidx.work.runtime.ktx)
-
-
-// Hilt + WorkManager integration
+    //  --- HILT + WORKMANAGER ---
     implementation(libs.androidx.work.hilt)
     ksp(libs.androidx.hilt.compiler.work)
+
+    //--- TESTES UNITÁRIOS ---
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(kotlin("test"))
+
+    // --- TESTES INSTRUMENTADOS (ESPRESSO / ANDROIDX TEST) ---
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.espresso.intents)
+    androidTestImplementation(libs.espresso.contrib)
+    androidTestImplementation(libs.hamcrest)
+
+    // --- HILT PARA TESTES INSTRUMENTADOS ---
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler.testing)
+
 
 }
