@@ -1,142 +1,132 @@
-﻿🚀 Projeto MVVM Clean XML + Firebase
+﻿🚀 Projeto MVVM Clean XML + Firebase – Versão Avançada (com Hilt, Testes e Sincronização Manual)
+
 🧩 Descrição
 
-Aplicativo Android desenvolvido com arquitetura MVVM + Clean Architecture, com foco total em funcionalidade, sincronização offline-first e integração com Firebase.
+Versão evoluída do projeto anterior, criada para demonstrar práticas profissionais de arquitetura, testes e injeção de dependência.
+O app agora implementa Hilt, testes unitários e instrumentados (UI) e sincronização controlada manualmente pelo usuário.
 
-⚠️ O visual do app é simples — o foco não foi design, e sim estrutura, lógica e boas práticas.
-A ideia foi criar uma base sólida, bem arquitetada, pra demonstrar domínio técnico real.
+O foco dessa atualização foi levar a estrutura a um padrão de produção — com código modular, altamente testável e manutenção simplificada.
 
-O app permite cadastro, listagem e sincronização automática de itens entre o banco local (Room) e o remoto (Firestore), utilizando o WorkManager para agendar sincronizações em segundo plano.
+🧱 Principais Diferenças em Relação à Versão Anterior
+Recurso	Antes	Agora
+Injeção de dependência	Nenhuma (manual)	✅ Hilt (Google Dagger)
+Testes	Apenas unitários simples	✅ JUnit + MockK + Espresso (UI)
+Sincronização	Sempre automática	✅ Botão de ativação/desativação de sincronização
+Arquitetura	MVVM + Clean Architecture	✅ MVVM + Clean Architecture + DI Hilt
+Repositórios	Criados manualmente	✅ Injetados com @Inject via Hilt
+Testes de UI	—	✅ Espresso + FragmentScenario (UI Testing)
+Cobertura	Jacoco básico	✅ Jacoco + Relatórios detalhados
+🧩 Arquitetura
 
-Além disso, há integração com Firebase Analytics e Crashlytics para monitoramento, e pipelines CI/CD completas com GitHub Actions.
+Segue os princípios de Clean Architecture e MVVM, com divisão clara entre camadas:
 
-💡 Projeto propositalmente feito sem Dependency Injection, pra entender as dores reais de instanciar tudo manualmente — e valorizar o uso de DI em projetos grandes.
-
-🏗️ Arquitetura
-
-O app segue os princípios de Clean Architecture e MVVM, dividido em camadas independentes:
-
-data/ → fontes de dados (Firebase + Room) e repositórios
-
-domain/ → casos de uso e modelos de domínio
-
-presentation/ → viewModels, fragments e adapters
-
-worker/ → tarefas em background com WorkManager
-
-core/ → utilitários e integrações com Analytics/Crashlytics
+data/        → Fontes de dados (Room + Firestore) e Repositórios
+domain/      → Casos de uso e modelos de domínio
+presentation/→ ViewModels, Fragments e Adapters
+di/          → Módulos de Injeção do Hilt
+worker/      → Sincronização automática (WorkManager)
+core/        → Utils, Extensions e Loggers
 
 ⚙️ Tecnologias Principais
 Categoria	Ferramenta / Biblioteca
 Linguagem	Kotlin
 UI	XML + Material Design
-Arquitetura	MVVM + Clean Architecture
-Reatividade	LiveData, Kotlin Flow
-Banco local	Room
+Arquitetura	MVVM + Clean Architecture + Hilt (DI)
+Reatividade	LiveData + Kotlin Flow
+Banco Local	Room Database
 Backend	Firebase Firestore
 Autenticação	Firebase Auth
-Armazenamento	Firebase Storage
-Notificações	WorkManager + POST_NOTIFICATIONS
+Sincronização	WorkManager (Offline-first)
+Controle de Sincronização	Botão manual para ativar/desativar sync
+Testes Unitários	JUnit + MockK + Coroutines Test
+Testes de UI	Espresso + FragmentScenario
+Cobertura	Jacoco (HTML/XML Report)
 Monitoramento	Firebase Analytics + Crashlytics
-Logs customizados	AnalyticsLogger + CrashlyticsLogger
-Testes	JUnit + Jacoco
-CI/CD	GitHub Actions
-Assinatura automática	Keystore via secrets
-Deploy	Firebase App Distribution
+CI/CD	GitHub Actions (build, test e deploy automáticos)
 🧠 Funcionalidades
 
 ✅ Login e cadastro de usuários
-✅ Criação e listagem de itens com Room
-✅ Sincronização automática com Firestore (WorkManager)
-✅ Status visual de “pendente” / “sincronizado”
-✅ Funcionalidade offline-first
-✅ Notificação ao concluir sincronização
-✅ Métricas e erros monitorados com Firebase
-✅ CI/CD com build, testes e deploy automatizados
+✅ Criação e listagem de itens (Room + Firestore)
+✅ Sincronização manual ou automática via botão toggle
+✅ Feedback visual com ProgressBar e status de sincronização
+✅ Persistência offline (offline-first)
+✅ Métricas e erros monitorados no Firebase
+✅ Testes unitários e de UI cobrindo lógicas e interações
+✅ CI/CD completo com build, testes e deploy automatizado
+
+🧪 Testes Automatizados
+🔹 Unit Tests
+
+Testes da camada de lógica com:
+
+JUnit
+
+MockK para mocks de dependências
+
+CoroutinesTest para flows e LiveData
+
+Jacoco para relatórios de cobertura
+
+🔹 UI Tests (Instrumented)
+
+Testes da camada de interface com:
+
+Espresso e FragmentScenario
+
+Verificação de elementos (isDisplayed(), perform(click()))
+
+Simulação de interações (toasts, loading, recyclerView)
 
 🔄 CI/CD Pipeline
 
-O projeto utiliza duas pipelines GitHub Actions, garantindo qualidade e entrega contínua.
+Rodando no GitHub Actions, com duas etapas principais:
 
 🧪 CI – Continuous Integration
 
-Roda em pull requests e push nas branches feature/** e fix/**.
-Executa:
+Análise estática: Detekt + Ktlint
 
-🔍 Detekt (análise estática)
+Lint Android
 
-🎨 Ktlint (estilo e formatação)
+Testes unitários e instrumentados
 
-🧹 Lint Android
-
-🧪 Testes unitários
-
-📊 Jacoco (relatório de cobertura)
-
-🔐 Criação automática do google-services.json
-
-🧠 O objetivo é garantir qualidade e padronização antes de integrar o código.
+Relatórios Jacoco automáticos
 
 🚀 CD – Continuous Deployment
 
-Roda em push na branch master, incluindo:
+Build release com keystore via secrets
 
-🔏 Build Release assinado automaticamente
+Upload do APK como artifact
 
-📦 Upload do APK como artifact
+Deploy automático no Firebase App Distribution
 
-☁️ Deploy no Firebase App Distribution
+Release notes geradas automaticamente
 
-📝 Release notes automáticas com commit e autor
-
-💬 Entrega contínua e automática — do push ao Firebase, sem intervenção manual.
-
-🔧 Como Rodar Localmente
+⚙️ Como Rodar Localmente
 
 Clone este repositório
 
-Adicione o google-services.json dentro da pasta app/
+Adicione o google-services.json em /app
 
 (Opcional) Configure o local.properties com o keystore
 
-Execute ./gradlew assembleDebug
+Execute:
 
-🧑‍💻 Propósito Educacional
+./gradlew assembleDebug
 
-Este projeto foi feito intencionalmente sem Hilt ou Koin, para entender:
+🧑‍💻 Propósito da Atualização
 
-como gerenciar dependências manualmente
-
-por que o DI é importante em escala
-
-como o WorkManager, ViewModel e Room interagem sem ajuda externa
-
-💬 Em uma próxima versão, o projeto será migrado para Hilt, servindo como comparativo de complexidade e manutenibilidade.
+Essa versão foi criada para demonstrar como aplicar injeção de dependência com Hilt, testes automatizados e melhor controle de sincronização em um projeto Android real.
+Ela serve como comparativo direto com a versão anterior, mostrando a diferença em escalabilidade, clareza e testabilidade do código.
 
 📊 Monitoramento e Testes
 
 Firebase Analytics: métricas de uso e eventos personalizados
 
-Crashlytics: erros capturados automaticamente (e via CrashlyticsLogger)
+Crashlytics: captura automática de falhas
 
-Jacoco: cobertura de testes com relatório HTML/XML
+Jacoco: relatório completo de cobertura
 
-📹 Demonstração
-
-📺 Assista à demonstração completa do projeto no LinkedIn:
-👉 https://www.linkedin.com/in/junior-costa-pereira-447b4b273/
-
-No vídeo mostro:
-
-Criação de itens offline
-
-Sincronização automática com Firestore
-
-Notificação de sucesso (WorkManager)
-
-Coleta de eventos no Firebase
-
-Execução da pipeline de build e deploy
+Espresso & MockK: validação de UI e lógicas de negócio
 
 ✉️ Contato
 
@@ -144,3 +134,5 @@ Execução da pipeline de build e deploy
 📧 juniorcosta15785@gmail.com
 
 💼 LinkedIn
+
+💻 Portfólio
