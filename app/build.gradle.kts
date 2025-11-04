@@ -187,6 +187,9 @@ dependencies {
     androidTestImplementation(libs.espresso.intents)
     androidTestImplementation(libs.espresso.contrib)
     androidTestImplementation(libs.hamcrest)
+    androidTestImplementation(libs.androidx.fragment.testing)
+    debugImplementation(libs.androidx.fragment.testing.manifest)
+
 
     // --- HILT PARA TESTES INSTRUMENTADOS ---
     androidTestImplementation(libs.hilt.android.testing)

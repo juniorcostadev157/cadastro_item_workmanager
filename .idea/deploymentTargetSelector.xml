@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest">
+      <SelectionState runConfigName="CadastroActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest (1)">
+      <SelectionState runConfigName="whenClickBackButton_shouldNavigateToLoginActivity()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="when_the_fields_are_empty_show_the_message_Toast()">
+      <SelectionState runConfigName="shouldShowProgressBar_whenStateIsLoading()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenFillFieldsButtonDisableDuringLogin()">
+      <SelectionState runConfigName="shouldRenderBaseUIElements()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenShowToastMessageIfPasswordDifferent()">
+      <SelectionState runConfigName="ListRoomFragmentUITest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

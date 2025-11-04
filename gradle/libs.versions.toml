@@ -33,6 +33,7 @@ androidx-test-runner = "1.5.2"
 androidx-test-ext-junit = "1.1.5"
 hamcrest = "2.2"
 protobuf = "3.25.3"
+fragment-testing = "1.6.2"
 
 
 [libraries]
@@ -89,7 +90,9 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 
 hamcrest = { group = "org.hamcrest", name = "hamcrest-library", version.ref = "hamcrest" }
 
-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
+androidx-fragment-testing = {group = "androidx.fragment", name = "fragment-testing", version.ref = "fragment-testing"}
+androidx-fragment-testing-manifest = { group = "androidx.fragment", name = "fragment-testing-manifest", version.ref = "fragment-testing" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
