@@ -13,7 +13,7 @@ class ListLocalItemsUseCase @Inject constructor(
 
     operator fun invoke(): Flow<List<Item>> {
         return repository.getAllLocalItems()
-            .flowOn(Dispatchers.IO) // perfeito porque muda o dispatcher
+            .flowOn(Dispatchers.IO)
 
     }
 }

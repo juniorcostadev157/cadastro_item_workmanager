@@ -75,4 +75,8 @@ class ListRoomViewModel @Inject constructor(
             _workState.value = state
         }
     }
+
+    fun setState(state: ListItemUiState){
+        _uiState.value = state
+    }
 }

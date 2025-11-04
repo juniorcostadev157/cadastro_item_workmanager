@@ -14,13 +14,7 @@ class LoginValidationUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String , password: String): ValidationResult{
 
-        if (email.isBlank() || !email.contains("@")){
-            return ValidationResult(false, "Email Invalido")
-        }
 
-        if (password.isBlank()){
-            return ValidationResult(false, "Preencha o Senha")
-        }
 
         val result = withContext(ioDispatcher) {
             repository.login(email, password)

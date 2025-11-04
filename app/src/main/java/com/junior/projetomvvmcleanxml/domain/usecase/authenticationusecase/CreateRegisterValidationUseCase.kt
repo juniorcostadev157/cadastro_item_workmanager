@@ -13,13 +13,11 @@ class CreateRegisterValidationUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String, password: String): ValidationResult {
 
-        if (email.isBlank() || !email.contains("@")){
-            return ValidationResult(false, "Email Invalido")
-        }
 
         if (password.length < 6){
             return ValidationResult(false, "Senha tem que ter pelo menos 6 caracteres")
         }
+
         val result  = withContext(ioDispatcher){
             repository.register(email, password)
         }

@@ -20,7 +20,7 @@ class ListRoomFragment : Fragment() {
     private var _binding: FragmentListRoomBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ListRoomViewModel by viewModels()
+    val viewModel: ListRoomViewModel by viewModels()
 
 
     override fun onCreateView(
